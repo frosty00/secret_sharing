@@ -19,7 +19,7 @@ class Point:
         self.y = y
 
     def __repr__(self):
-        return f'({self.x}, {hex(self.y)[2:]})'
+        return f'{hex(self.y)[2:]}'
 
 
 def encode_secret(secret: str, shared_secrets: int, total_secrets: int) -> list[Point]:
@@ -29,13 +29,15 @@ def encode_secret(secret: str, shared_secrets: int, total_secrets: int) -> list[
     points = []
     # generate a random equation that is at most of degree shared_secrets - 1
     degree = shared_secrets - 1
-    random_bytes = os.urandom(degree * 16)
+    random_bytes = os.urandom(degree * 8)
     equation = []
-    for i in range(0, len(random_bytes), 16):
-        eight_bytes = random_bytes[i:i+16]
+    for i in range(0, len(random_bytes), 8):
+        eight_bytes = random_bytes[i:i+8]
         equation.append(int.from_bytes(eight_bytes, 'big'))
     equation.append(secret_integer)
-    for x in range(1, total_secrets + 1):
+    for _ in range(1, total_secrets + 1):
+        # if I go bigger than 2^100k my computer takes too long to calculate it
+        x = random.randrange(0, 2 ** 100000)
         # apply the equation for on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
         points.append(Point(x, y % prime_field))
@@ -78,7 +80,7 @@ if __name__ == '__main__':
     print(f'selected {SHARED_SECRETS} points to recover the private key')
     print('\n---\n')
     recovered_points = random.sample(encoded, SHARED_SECRETS)
-    print(*recovered_points, sep='\n')
+    print(*recovered_points, sep='\n\n\n\n')
     print('\n---\n')
 
     decoded = decode_secret(recovered_points)

@@ -5,8 +5,8 @@ import operator
 import math
 import random
 
-SHARED_SECRETS = 3
-TOTAL_SECRETS = 7
+SHARED_SECRETS = 7
+TOTAL_SECRETS = 20
 
 # a very big prime number
 # https://en.wikipedia.org/wiki/Largest_known_prime_number
@@ -38,7 +38,7 @@ def encode_secret(secret: str, shared_secrets: int, total_secrets: int) -> list[
     for _ in range(1, total_secrets + 1):
         # if I go bigger than 2^100k my computer takes too long to calculate it
         x = random.randrange(0, 2 ** 10000)
-        # apply the equation for on each point
+        # apply the equation on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
         points.append(Point(x, y % prime_field))
     return points

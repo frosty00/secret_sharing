@@ -36,8 +36,7 @@ def encode_secret(secret: str, shared_secrets: int, total_secrets: int) -> list[
         equation.append(int.from_bytes(eight_bytes, 'big'))
     equation.append(secret_integer)
     for _ in range(1, total_secrets + 1):
-        # if I go bigger than 2^100k my computer takes too long to calculate it
-        x = random.randrange(0, 2 ** 100000)
+        x = random.randrange(0, 2 ** 10000)
         # apply the equation for on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
         points.append(Point(x, y % prime_field))

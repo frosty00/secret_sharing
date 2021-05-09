@@ -13,8 +13,6 @@ TOTAL_SECRETS = 7
 prime_field = 2 ** 282589933 - 1
 
 
-
-
 class Point:
     def __init__(self, x, y):
         self.x = x

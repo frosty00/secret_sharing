@@ -29,7 +29,7 @@ class Point:
         self.y = y
 
     def __repr__(self):
-        return f'({hex(self.x)[2:]}, {hex(self.y)[2:]})'
+        return f'({hex(self.x)[2:]},\n {hex(self.y)[2:]})'
 
 
 def encode_secret(secret_indexes: list[int], shared_secrets: int, total_secrets: int) -> list[Point]:
@@ -45,7 +45,7 @@ def encode_secret(secret_indexes: list[int], shared_secrets: int, total_secrets:
     for i in range(0, len(random_bytes), 32):
         equation.append(int.from_bytes(random_bytes[i:i+32], 'big'))
     equation.append(secret_integer)
-    for _ in range(1, total_secrets + 1):
+    for _ in range(total_secrets):
         x = random.randrange(0, prime_field)
         # apply the equation on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
@@ -84,21 +84,19 @@ if __name__ == '__main__':
     print('PRIVATE KEY:')
     print(private_key, '\n')
 
-    print(f'encoding private_key as a shared secret {SHARED_SECRETS} of {TOTAL_SECRETS}')
-
     encoded = encode_secret(indexes, SHARED_SECRETS, TOTAL_SECRETS)
 
-    print(f'encoded private key as {len(encoded)} points on a polynomial')
+    print(f'encoded private key as {SHARED_SECRETS} of {len(encoded)} points on a polynomial')
 
-    print('\n---\n')
-    print(*encoded, sep='\n\n\n\n')
-    print('\n---\n')
+    print('\n-------------------------------------------------------------------------------------------------\n')
+    print(*encoded, sep='\n\n')
+    print('\n-------------------------------------------------------------------------------------------------\n')
 
     print(f'selected {SHARED_SECRETS} points to recover the private key')
-    print('\n---\n')
+    print('\n-------------------------------------------------------------------------------------------------\n')
     recovered_points = random.sample(encoded, SHARED_SECRETS)
-    print(*recovered_points, sep='\n\n\n\n')
-    print('\n---\n')
+    print(*recovered_points, sep='\n\n')
+    print('\n-------------------------------------------------------------------------------------------------\n')
 
     decoded = decode_secret(recovered_points)
     print('RECOVERED KEY:')

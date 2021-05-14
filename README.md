@@ -1,6 +1,6 @@
 # Secret Sharing
 
-Secret Sharing implementation using Lagrange interpolation in python.
+Secret Sharing implementation using Lagrange Interpolation in python.
 
 http://www.eecs70.org/static/notes/n8.pdf
 
@@ -15,7 +15,9 @@ python3 secret_sharing
 
 # Information
 
-Due to the nature of secret sharing algorithms an attacker cannot gain any new information about the secret unless he has `N` keys. This means that it is possible to distribute a secret amongst ten people and if nine of them get together they will not learn anything about the secret. Typically they are described as 2 of 5 or 3 of 7 keys. This means that of the 7 points generated on a polynomial only 3 are needed to derive the secret key.
+Secret Sharing uses Lagrange Interpolation in a prime field to prevent any group of people that is less than the degree of the secret polynomial equation to guess the secret. For example you could distribute a shared secret of a nuclear code to 10 army generals and make it so it is only possible to reveal the nuclear code if 5 army generals get together. If 4 or less army generals get together **no information about the secret is revealed** due to properties of [finite fields](https://en.wikipedia.org/wiki/Finite_field_arithmetic).
+
+You can customize this code to allow for `2 of 5` or `3 of 7` or any other parameters to distribute your secret. 
 
 # License
 

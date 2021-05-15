@@ -130,7 +130,7 @@ if __name__ == '__main__':
 
 import secret_sharing
 
-private_key = secret_sharing.decode_secret(\n{pprint.pformat(recovered_words)}\n)
+private_key = secret_sharing.decode_secret(\n{pprint.pformat(recovered_words, width=100, indent=4).replace('[   ', '   [')}\n)
 print(private_key)'''
     print(usage)
 

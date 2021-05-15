@@ -34,7 +34,7 @@ class Point:
         return f'({hex(self.x)[2:]},\n {hex(self.y)[2:]})'
 
 
-def encode_secret(secret_indexes: list[int], shared_secrets: int, total_secrets: int) -> list[str]:
+def encode_secret(secret_indexes, shared_secrets: int, total_secrets: int):
     assert shared_secrets <= total_secrets
     # encode secret as an integer
     as_bits = ''.join(bin(index)[2:].rjust(SIZE, '0') for index in secret_indexes)
@@ -55,7 +55,7 @@ def encode_secret(secret_indexes: list[int], shared_secrets: int, total_secrets:
     return [decode_words(point) for point in points]
 
 
-def decode_secret(secret_words: list[str]) -> str:
+def decode_secret(secret_words) -> str:
     def reduce(variable, xs):
         return functools.reduce(operator.mul, [variable - value for value in xs])
     secrets = [encode_words(words) for words in secret_words]

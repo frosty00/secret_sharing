@@ -10,7 +10,7 @@ http://www.eecs70.org/static/notes/n8.pdf
 
 ```
 pip3 install -r requirements.txt
-python3 secret_sharing
+python3 secret_sharing.py
 ```
 
 # Information

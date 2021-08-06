@@ -4,7 +4,7 @@ A Secret Sharing implementation using Lagrange Interpolation in python.
 
 Useful for creating distributed cryptocurrency vaults that are not vulnerable to thiefs.
 
-http://www.eecs70.org/static/notes/n8.pdf
+https://inst.eecs.berkeley.edu/~cs70/sp14/notes/n7.pdf
 
 # Usage
 

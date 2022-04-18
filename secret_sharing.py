@@ -1,4 +1,3 @@
-import os
 import sympy
 import functools
 import operator
@@ -42,13 +41,10 @@ def encode_secret(secret_indexes, shared_secrets: int, total_secrets: int):
     points = []
     # generate a random equation that is at most of degree shared_secrets - 1
     degree = shared_secrets - 1
-    random_bytes = os.urandom(degree * 32)
-    equation = []
-    for i in range(0, len(random_bytes), 32):
-        equation.append(int.from_bytes(random_bytes[i:i+32], 'big'))
+    equation = [1] * degree
     equation.append(secret_integer)
     for _ in range(total_secrets):
-        x = random.randrange(0, prime_field)
+        x = random.randint(0, prime_field)
         # apply the equation on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
         points.append(Point(x, y % prime_field))

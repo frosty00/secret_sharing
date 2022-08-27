@@ -7,6 +7,9 @@ import pprint
 
 random = random.SystemRandom()
 
+# These parameters can be editted
+# Shared secrets indicates the number of secrets needed to recover to key
+# Total secrets indicates how many secrets to generate (can be up to prime_field - 1)
 SHARED_SECRETS = 2
 TOTAL_SECRETS = 5
 
@@ -100,17 +103,19 @@ if __name__ == '__main__':
     private_key = ' '.join(private_key_array)
 
     print('PRIVATE KEY:')
+    print('\n-------------------------------------------------------------------------------------------------\n')
     print(private_key, '\n')
+    print('\n-------------------------------------------------------------------------------------------------\n')
 
     encoded = encode_secret(selected_indexes, SHARED_SECRETS, TOTAL_SECRETS)
 
-    print(f'encoded private key as {SHARED_SECRETS} of {len(encoded)} points on a polynomial')
+    print(f'encoded private key as {SHARED_SECRETS} of {len(encoded)} points on a polynomial, any {SHARED_SECRETS} these secrets can be used to recover the key!')
 
     print('\n-------------------------------------------------------------------------------------------------\n')
     print(*encoded, sep='\n\n')
     print('\n-------------------------------------------------------------------------------------------------\n')
 
-    print(f'selected {SHARED_SECRETS} points to recover the private key')
+    print(f'selected {SHARED_SECRETS} random secrets to recover the private key')
     print('\n-------------------------------------------------------------------------------------------------\n')
 
     recovered_words = random.sample(encoded, SHARED_SECRETS)
@@ -118,19 +123,23 @@ if __name__ == '__main__':
 
 
     print('\n-------------------------------------------------------------------------------------------------\n')
+    print('EXAMPLE USAGE:')
+    print('\n-------------------------------------------------------------------------------------------------\n')
 
     decoded = decode_secret(recovered_words)
 
-    print('USAGE:')
+    # cannot have newline in f-string
+    replace_comma = ',\n'
+    replace_bracket = '[\n '
     usage = f'''\
 
 import secret_sharing
 
-private_key = secret_sharing.decode_secret(\n{pprint.pformat(recovered_words, width=100, indent=4).replace('[   ', '   [')}\n)
+private_key = secret_sharing.decode_secret({pprint.pformat(recovered_words, width=100, indent=4).replace(',', replace_comma).replace(']', '').replace('[', replace_bracket)}\n])
 print(private_key)'''
     print(usage)
 
     print('\n-------------------------------------------------------------------------------------------------\n')
-
     print('RECOVERED KEY:')
+    print('\n-------------------------------------------------------------------------------------------------\n')
     print(decoded)

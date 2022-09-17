@@ -77,19 +77,16 @@ def decode_polynomial_words(parts: list[str]) -> str:
 
 
 def decode_polynomial(parts: list[str], encoding_function: types.FunctionType, decoding_function: types.FunctionType) -> str:
-    def reduce_function(variable: sympy.Symbol, xs):
+    def reduce_function(variable: sympy.Symbol, xs: set[int]):
         return functools.reduce(operator.mul, [variable - value for value in xs])
     secrets = [encoding_function(part) for part in parts]
-    secrets_by_x = {}
-    for secret in secrets:
-        assert secret.x > 0
-        secrets_by_x[secret.x] = secret.y
+    secrets_by_x = set(secret.x for secret in secrets)
     x_symbol = sympy.Symbol('x')
     equation = 0
-    for x, y in secrets_by_x.items():
-        copy = secrets_by_x.copy()
-        del copy[x]
-        equation = equation + reduce_function(x_symbol, copy) * sympy.invert(reduce_function(x, copy), prime_field) * y
+    while secrets:
+        secret = secrets.pop()
+        copy = secrets_by_x - {secret.x}
+        equation += reduce_function(x_symbol, copy) * sympy.invert(reduce_function(secret.x, copy), prime_field) * secret.y
     integer_solution = int(equation.subs(x_symbol, 0)) % prime_field
     return decoding_function(integer_solution)
 
@@ -171,9 +168,10 @@ if __name__ == '__main__':
     args = namespace.args
     if len(args) < 3:
         print_usage()
-    num_shared_secrets = int(args[0])
-    num_total_secrets = args[1]
-    num_total_secrets = is_base_10(num_total_secrets)
+    num_shared_secrets = is_base_10(args[0])
+    if not num_shared_secrets:
+        print_usage()
+    num_total_secrets = is_base_10(args[1])
     if num_total_secrets:
         key = args[2:]
         is_words = len(key) == 24

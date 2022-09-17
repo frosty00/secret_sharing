@@ -6,7 +6,6 @@ import random
 import argparse
 import itertools
 import sys
-import collections
 import types
 
 system_random = random.SystemRandom()

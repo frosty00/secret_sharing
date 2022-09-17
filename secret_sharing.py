@@ -1,11 +1,11 @@
 import sympy
 import functools
 import operator
-import math
 import random
+import math
 import pprint
 
-random = random.SystemRandom()
+system_random = random.SystemRandom()
 
 # These parameters can be editted
 # Shared secrets indicates the number of secrets needed to recover to key
@@ -47,7 +47,7 @@ def encode_secret(secret_indexes, shared_secrets: int, total_secrets: int):
     equation = [1] * degree
     equation.append(secret_integer)
     for _ in range(total_secrets):
-        x = random.randint(0, prime_field)
+        x = system_random.randrange(0, prime_field)
         # apply the equation on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
         points.append(Point(x, y % prime_field))

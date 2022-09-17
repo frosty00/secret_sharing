@@ -19,7 +19,6 @@ prime_field = (2 ** 384) - (2 ** 128) - (2 ** 96) + (2 ** 32) - 1
 HEX_SIZE = 8
 # a word encodes 11 bytes, since 2 ** 11 = 2048 (size of bip0039 wordlist)
 WORD_SIZE = 11
-WORDLIST_FILENAME = 'bip-0039.txt'
 # the prime field is 384 bits and we store (x, y) points of 384 bit numbers
 # and so a shared secret is made up of 70 words, since 70 * 11 > 2 * 384 which means it can encode one point
 SHARED_SECRET_WORD_LENGTH = 70

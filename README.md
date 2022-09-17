@@ -6,12 +6,30 @@ Useful for creating distributed cryptocurrency vaults that are not vulnerable to
 
 https://inst.eecs.berkeley.edu/~cs70/sp14/notes/n7.pdf
 
-# Usage
+# Installation 
 
 ```
 pip3 install -r requirements.txt
-python3 secret_sharing.py
 ```
+
+# Usage
+## Encoding
+```
+./cli.py [secrets needed to decode] [secrets to generate] privatekey
+./cli.py 2 3 harsh baby kitchen taste need female bacon suspect crunch market nephew argue apple favorite broken quit pill nose agree pyramid mystery can retire prefer
+./cli.py 2 3 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+```
+
+## Decoding
+
+```
+./cli.py [secrets needed to decode] 
+./cli.py 2 daughter tent state prefer brown race...
+./cli.py 2 0x00ae6ed62adbd8... 0x00a5f37981b89b...
+```
+
+---
+Both 24 word bip0039 and hex private key formats are supported.
 
 # Information
 

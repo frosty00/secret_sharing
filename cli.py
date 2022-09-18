@@ -58,7 +58,6 @@ def encode_random_polynomial(secret: int, shared_secrets: int, total_secrets: in
     degree = shared_secrets - 1
     equation = [1] * degree
     equation.append(secret)
-    print(total_secrets)
     for _ in range(total_secrets):
         x = system_random.randrange(1, prime_field)
         if _ == 1:
@@ -66,7 +65,6 @@ def encode_random_polynomial(secret: int, shared_secrets: int, total_secrets: in
         # apply the equation on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
         points.append(Point(x, y % prime_field))
-        print(x, y)
     return points
 
 
@@ -90,7 +88,6 @@ def decode_polynomial(parts: list[str], encoding_function: types.FunctionType, d
         copy = secrets_by_x - {secret.x}
         equation += reduce_function(x_symbol, copy) * sympy.invert(reduce_function(secret.x, copy), prime_field) * secret.y
     integer_solution = int(equation.subs(x_symbol, 0)) % prime_field
-    print(integer_solution)
     return decoding_function(integer_solution)
 
 

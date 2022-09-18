@@ -126,7 +126,7 @@ def encode_point(indexes: list[int], size: int) -> Point:
 
 def decode_point(point: Point, size: int):
     big_integer = point.x + (point.y << 384)
-    padding = math.ceil(384 * 2 // size)
+    padding = math.ceil(384 * 2 / size)
     bytes_solution = bin(big_integer)[2:].rjust(padding * size, '0')
     indexes = [int(bytes_solution[i:i + size], base=2) for i in range(0, len(bytes_solution), size)]
     return indexes
@@ -134,7 +134,6 @@ def decode_point(point: Point, size: int):
 
 def decode_point_hex(point: Point) -> str:
     indexes = decode_point(point, HEX_SIZE)
-    print(indexes)
     return '0x' + ''.join([hex(i)[2:].rjust(2, '0') for i in indexes])
 
 

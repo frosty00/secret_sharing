@@ -189,7 +189,7 @@ if __name__ == '__main__':
         is_words = all(word in INDEXED_WORDS for word in keys)
         if is_words:
             if len(keys) % SHARED_SECRET_WORD_LENGTH != 0:
-                print('\nMust be a multiple of 70 words\n')
+                print(f'\nMust be a multiple of {SHARED_SECRET_WORD_LENGTH} words\n')
                 exit(3)
             new_keys = []
             for i in range(0, len(keys), SHARED_SECRET_WORD_LENGTH):

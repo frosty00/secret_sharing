@@ -60,8 +60,6 @@ def encode_random_polynomial(secret: int, shared_secrets: int, total_secrets: in
     equation.append(secret)
     for _ in range(total_secrets):
         x = system_random.randrange(1, prime_field)
-        if _ == 1:
-            x = 0
         # apply the equation on each point
         y = sum(x ** (degree - i) * coefficient for i, coefficient in enumerate(equation))
         points.append(Point(x, y % prime_field))

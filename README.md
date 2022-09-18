@@ -40,3 +40,5 @@ You can customize this code to allow for 2 of 5 or 3 of 7 or any number 0 < s < 
 # License
 
 This code uses the BSD Simplified License, a permissive license that allows users to do whatever they please without providing any liability.
+
+![crypto nerd](https://imgs.xkcd.com/comics/security.png)

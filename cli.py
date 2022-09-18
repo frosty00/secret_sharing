@@ -53,7 +53,6 @@ def encode_random_polynomial_words(word_key: list[str], shared_secrets: int, tot
 
 
 def encode_random_polynomial(secret: int, shared_secrets: int, total_secrets: int) -> list[Point]:
-    assert shared_secrets <= total_secrets
     points = []
     # generate a random equation that is at most of degree shared_secrets - 1
     degree = shared_secrets - 1
